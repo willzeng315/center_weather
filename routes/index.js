@@ -1,0 +1,47 @@
+var express = require('express');
+var http = require('http');
+var debug = require('debug')('worker');
+var router = express.Router();
+var parseModel = require('../models/parseXML');
+
+/* GET home page. */
+router.get('/', function(req, res) {
+    res.render('index', {
+        title: 'Express'
+    });
+});
+
+
+router.get('/test/:xmlPath', function(req, res) {
+    debug('xmlPath1111',+req.params.xmlPath);
+
+    var options = {
+        hostname: "www.cwb.gov.tw",
+        path: '/rss/forecast/36_'+ req.params.xmlPath +'.xml'
+    };
+
+    http.get(options, function(response) {
+
+        var completeResponse = '';
+        response.on('data', function(chunk) {
+            completeResponse += chunk;
+        });
+
+        response.on('end', function() {
+            parseModel.parseTodayWeather(completeResponse, function(parseResult) {
+                debug('Title = ' +parseResult.title);
+                parseModel.parseWeekWeather(completeResponse, function(parseWeekResult) {
+                    debug('Title = ' +parseWeekResult.title);
+                    debug('data = ' +parseWeekResult.desc);
+                    res.json(parseWeekResult);
+                });
+            });
+
+        });
+
+
+    });
+        
+});
+
+module.exports = router;

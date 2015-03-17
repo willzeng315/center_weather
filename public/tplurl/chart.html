@@ -1,0 +1,47 @@
+<div ng-controller="myctrl">
+    <div class="row">
+        <div class="span9">
+            <h2>一週氣象預報（中央氣象局來源）</h2>
+            <div class="span4">
+                <div class="row-fluid"> 選擇城市
+                    <select ng-model="chooseCity" ng-options="t.id as t.title for t in chartTypes" ng-change="changeCity()"></select>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <highchart id="chart1" config="chartConfig" class="span9"></highchart>
+            </div>
+
+            <div>
+                <table class="table table-striped table-bordered table-hover table-condensed">
+                    <tr ng-repeat="data in dateSet">
+                        <td width="200">{{data.x0}}</td>
+                        <td width="200">{{data.x1}}</td>
+                        <td width="200">{{data.x2}}</td>
+                        <td width="200">{{data.x3}}</td>
+                        <td width="200">{{data.x4}}</td>
+                        <td width="200">{{data.x5}}</td>
+                    </tr>
+                    <tr ng-repeat="data in dayWeather">
+                        <td>{{data.x0}}</td>
+                        <td>{{data.x1}}</td>
+                        <td>{{data.x2}}</td>
+                        <td>{{data.x3}}</td>
+                        <td>{{data.x4}}</td>
+                        <td>{{data.x5}}</td>
+                    </tr>
+                    <tr ng-repeat="data in nightWeather">
+                        <td>{{data.x0}}</td>
+                        <td>{{data.x1}}</td>
+                        <td>{{data.x2}}</td>
+                        <td>{{data.x3}}</td>
+                        <td>{{data.x4}}</td>
+                        <td>{{data.x5}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

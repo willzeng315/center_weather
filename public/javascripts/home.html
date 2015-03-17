@@ -1,0 +1,14 @@
+    <div ng-controller="myctrl">
+        <div class="row">
+            <div class="span9">
+                               <div class="span4">
+                    <div class="row-fluid">Default Type <select ng-model="chartConfig.options.chart.type" ng-options="t.id as t.title for t in chartTypes"></select></div>
+                    </div>
+<h2>Highcharts-ng example</h2>
+
+                <div class="row">
+                     <highchart id="chart1" config="chartCog" class="span9" ></highchart>
+                </div>
+            </div>
+        </div>
+    </div>
