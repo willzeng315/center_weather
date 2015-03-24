@@ -37,6 +37,7 @@ angular.module('myapp', ['ui.router', 'highcharts-ng'])
             var weatherData = [];
             $http.get('/test/'+$scope.chooseCity).success(function(data) {
                 angular.copy(data, weatherData);
+                console.log(weatherData.desc.maxTemp);
                 $scope.chartConfig.series = [{
                     "name": "最高溫度",
                     "data": weatherData.desc.maxTemp,

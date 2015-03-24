@@ -3,11 +3,20 @@ var http = require('http');
 var debug = require('debug')('worker');
 var router = express.Router();
 var parseModel = require('../models/parseXML');
+var cronModel = require('../models/myCron');
+
 
 /* GET home page. */
 router.get('/', function(req, res) {
     res.render('index', {
         title: 'Express'
+    });
+});
+
+router.get('/startCron', function(req, res) {
+    cronModel.startCron();
+    res.render('index', {
+        title: 'Start Cron Job!'
     });
 });
 
@@ -29,10 +38,12 @@ router.get('/test/:xmlPath', function(req, res) {
 
         response.on('end', function() {
             parseModel.parseTodayWeather(completeResponse, function(parseResult) {
-                debug('Title = ' +parseResult.title);
+                debug('Today Title = ' +parseResult.title);
+                debug('Today Data = ' +parseResult.desc);
+
                 parseModel.parseWeekWeather(completeResponse, function(parseWeekResult) {
-                    debug('Title = ' +parseWeekResult.title);
-                    debug('data = ' +parseWeekResult.desc);
+                    //debug('Title = ' +parseWeekResult.title);
+                    //debug('data = ' +parseWeekResult.desc);
                     res.json(parseWeekResult);
                 });
             });
